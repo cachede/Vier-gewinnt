@@ -1,8 +1,9 @@
 #ifndef _VIER_H_
 #define _VIER_H_
 
-#define BOARD_WIDTH 7
+#define BOARD_WIDTH  7
 #define BOARD_HEIGHT 6
+#define BOARD_HOLES  42
 
 #include <stdbool.h>
 
@@ -18,5 +19,6 @@ typedef struct {
 void init_game(Game *game);
 int make_move(Game *game, int column);
 void print_gameboard_terminal(Game* game);
+bool check_winner(Game* game);
 
 #endif // _VIER_H_

@@ -54,3 +54,10 @@ void print_gameboard_terminal(Game* game) {
         printf("\n---------------------------------\n");
     }
 }
+
+bool check_winner(Game* game) {
+
+    //TODO implement the check for a winner
+    
+    return false;
+}

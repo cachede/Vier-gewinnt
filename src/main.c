@@ -2,7 +2,7 @@
 #include "../inc/raylib.h"
 
 // own includes
-#include "vier.h"
+#include "renderer.h"
 
 int main(void)
 {
@@ -14,7 +14,11 @@ int main(void)
     Game game;
     init_game(&game);
     
-    InitWindow(screenWidth, screenHeight, "Vier gewinnt");
+    Renderer renderer;
+    init_renderer(&renderer);
+
+    printf("%d,%d\n\n", renderer.screen_width, renderer.screen_height);
+    InitWindow(renderer.screen_width, renderer.screen_height, "Vier gewinnt");
 
     SetTargetFPS(60);
     // Main game loop
@@ -30,6 +34,8 @@ int main(void)
         BeginDrawing();
 
             ClearBackground(RAYWHITE);
+
+            render_game(&renderer, &game);
 
             DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
 
