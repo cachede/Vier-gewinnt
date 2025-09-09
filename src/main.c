@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include "../inc/raylib.h"
 
+// own includes
+#include "vier.h"
+
 int main(void)
 {
     // Initialization
@@ -8,6 +11,9 @@ int main(void)
     const int screenWidth = 800;
     const int screenHeight = 450;
 
+    Game game;
+    init_game(&game);
+    
     InitWindow(screenWidth, screenHeight, "Vier gewinnt");
 
     SetTargetFPS(60);
