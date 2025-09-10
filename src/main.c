@@ -8,16 +8,12 @@ int main(void)
 {
     // Initialization
     //--------------------------------------------------------------------------------------
-    const int screenWidth = 800;
-    const int screenHeight = 450;
-
     Game game;
     init_game(&game);
     
     Renderer renderer;
     init_renderer(&renderer);
 
-    printf("%d,%d\n\n", renderer.screen_width, renderer.screen_height);
     InitWindow(renderer.screen_width, renderer.screen_height, "Vier gewinnt");
 
     SetTargetFPS(60);
@@ -33,11 +29,9 @@ int main(void)
         //----------------------------------------------------------------------------------
         BeginDrawing();
 
-            ClearBackground(RAYWHITE);
+            ClearBackground(SKYBLUE);
 
             render_game(&renderer, &game);
-
-            DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
 
         EndDrawing();
         //----------------------------------------------------------------------------------
