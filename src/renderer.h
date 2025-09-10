@@ -5,7 +5,7 @@
 
 // screen stuff
 #define RENDERER_SCREEN_WIDTH  1200
-#define RENDERER_SCREEN_HEIGHT 800
+#define RENDERER_SCREEN_HEIGHT 600
 
 // game board stuff
 #define RENDERER_BOARD_POSITION_X 100

@@ -1,38 +1,30 @@
-# - inc/
-#     - *.h
-# - lib/
-#     - *.lib
-# - src/
-#     - *.c
-#     - *.h
-#     - *.cpp
-#	 - *.hpp
-# - obj/
-#     - *.o
-# - bin/
-#     - main.exe
-
-TARGET := bin/main.exe
+TARGET := ./bin/main.exe
 SOURCES := $(wildcard src/*.c src/*.cpp)
 OBJECTS := $(patsubst src%,obj%, $(patsubst %.c,%.o, $(patsubst %.cpp,%.o,$(SOURCES))))
+DEPS := $(OBJECTS:.o=.d)
 
-INCLUDE := -I./inc
+INCLUDE := -I./inc -I./src
 LIBPATH := -L./lib
 LIBS := -lraylib -lgdi32 -lwinmm
 
-FLAGS := -Wall -Wextra -ggdb
+FLAGS := -Wall -Wextra -ggdb -MMD -MP
 CXXFLAGS := $(FLAGS)
 
 CXX := gcc
 
-all: $(OBJECTS)
-	$(CXX) $(INCLUDE) $(OBJECTS) -o $(TARGET) $(LIBPATH) $(LIBS)
+all: $(TARGET)
 
-%.o: ../src/%.c
+$(TARGET): $(OBJECTS)
+	$(CXX) $(INCLUDE) $(OBJECTS) -o $@ $(LIBPATH) $(LIBS)
+
+obj/%.o: src/%.c
 	$(CXX) $(FLAGS) $(INCLUDE) -c $< -o $@
 
-%.o: ../src/%.cpp
+obj/%.o: src/%.cpp
 	$(CXX) $(CXXFLAGS) $(INCLUDE) -c $< -o $@
+
+
+-include $(DEPS)
 
 .PHONY: clean help
 
