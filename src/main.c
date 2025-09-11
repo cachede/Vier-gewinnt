@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "../inc/raylib.h"
 
+
 // own includes
 #include "renderer.h"
 
@@ -14,6 +15,9 @@ int main(void)
     Renderer renderer;
     init_renderer(&renderer);
 
+    InputRenderer input_renderer;
+    init_input_renderer(&input_renderer);
+
     InitWindow(renderer.screen_width, renderer.screen_height, "Vier gewinnt");
 
     SetTargetFPS(60);
@@ -24,6 +28,17 @@ int main(void)
         //----------------------------------------------------------------------------------
         // TODO: Update your variables here
         //----------------------------------------------------------------------------------
+        for(int i = 0; i < BOARD_WIDTH; i++) {
+            
+            if(input_renderer.column_pressed[i]) {
+                game.stone_counter += make_move(&game, i);
+                input_renderer.column_pressed[i] = false;
+            }
+        }
+
+        if(check_winner(&game)) {
+            game.game_over = true;
+        }
 
         // Draw
         //----------------------------------------------------------------------------------
@@ -32,6 +47,7 @@ int main(void)
             ClearBackground(SKYBLUE);
 
             render_game(&renderer, &game);
+            render_input(&input_renderer);
 
         EndDrawing();
         //----------------------------------------------------------------------------------
