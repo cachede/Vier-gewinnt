@@ -59,7 +59,7 @@ void print_gameboard_terminal(Game* game) {
 bool check_winner(Game* game, int column) {
 
     //TODO implement the check for a winner
-    return check_vertical(game, column); 
+    return check_vertical(game, column) || check_horizontal(game, column); 
 }
 
 bool check_vertical(Game* game, int column) {
@@ -80,5 +80,40 @@ bool check_vertical(Game* game, int column) {
         }
         return true;
     }
+}
+
+bool check_horizontal(Game* game, int column) {
+
+    char current_player = game->stone_counter % 2 ? PLAYER_YELLOW : PLAYER_RED;
+    int y_index = game->height_array[column] - 1;
+
+    int win_counter = 1;
+    int search_index = column - 1;
+
+    // search left side
+    while(search_index >= 0 && game->board[y_index][search_index] == current_player && win_counter < 4) {
+
+        printf("CHECKINK: %d\n", search_index);
+        if(game->board[y_index][search_index] == current_player) {
+            win_counter++;
+        }
+
+        search_index--;
+    }
+
+    // search right side
+    search_index = column + 1;
+
+    while(search_index < BOARD_WIDTH && game->board[y_index][search_index] == current_player && win_counter < 4) {
+
+        if(game->board[y_index][search_index] == current_player) {
+            win_counter++;
+        }
+
+        search_index++;
+    }
+
+
+    return win_counter >= FOUR_TO_WIN;
 }
 
