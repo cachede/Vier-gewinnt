@@ -33,7 +33,8 @@ int make_move(Game* game, int column) {
         return 0;
     }
         
-    char current_player_piece = game->stone_counter % 2 == 0 ? 'X' : 'O';
+    char current_player_piece = game->stone_counter % 2 == 0 ? PLAYER_YELLOW : PLAYER_RED;
+    printf("PLAYER %c made a move. \n", current_player_piece);
     game->board[y_index][column] = current_player_piece;
     game->height_array[column] += 1;
 
@@ -55,9 +56,29 @@ void print_gameboard_terminal(Game* game) {
     }
 }
 
-bool check_winner(Game* game) {
+bool check_winner(Game* game, int column) {
 
     //TODO implement the check for a winner
-    
-    return false;
+    return check_vertical(game, column); 
 }
+
+bool check_vertical(Game* game, int column) {
+
+    if(game->height_array[column] < 4) {
+        return false;
+    } else {
+
+        char current_player = game->stone_counter % 2 ? PLAYER_YELLOW : PLAYER_RED; //cheeky trick, no?
+        int current_height_index = game->height_array[column] - 1;
+        
+        for(int y = current_height_index; y > current_height_index - FOUR_TO_WIN; y--) {
+
+            if(game->board[y][column] != current_player){
+                return false;
+            }
+
+        }
+        return true;
+    }
+}
+

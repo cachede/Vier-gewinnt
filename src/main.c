@@ -28,17 +28,24 @@ int main(void)
         //----------------------------------------------------------------------------------
         // TODO: Update your variables here
         //----------------------------------------------------------------------------------
-        for(int i = 0; i < BOARD_WIDTH; i++) {
+
+        if(!game.game_over) {
             
-            if(input_renderer.column_pressed[i]) {
-                game.stone_counter += make_move(&game, i);
-                input_renderer.column_pressed[i] = false;
+            for(int i = 0; i < BOARD_WIDTH; i++) {
+                
+                if(input_renderer.column_pressed[i]) {
+                    game.stone_counter += make_move(&game, i);
+                    
+                    if(check_winner(&game, i)) {
+                        game.game_over = true;
+                    }
+    
+                    input_renderer.column_pressed[i] = false;
+                }
             }
+
         }
 
-        if(check_winner(&game)) {
-            game.game_over = true;
-        }
 
         // Draw
         //----------------------------------------------------------------------------------

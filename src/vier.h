@@ -4,6 +4,9 @@
 #define BOARD_WIDTH  7
 #define BOARD_HEIGHT 6
 #define BOARD_HOLES  42
+#define FOUR_TO_WIN  4
+#define PLAYER_YELLOW 'X'
+#define PLAYER_RED 'O'
 
 #include <stdbool.h>
 
@@ -19,6 +22,10 @@ typedef struct {
 void init_game(Game *game);
 int make_move(Game *game, int column);
 void print_gameboard_terminal(Game* game);
-bool check_winner(Game* game);
+bool check_winner(Game* game, int column);
+//TODO eine get_current_player funktion fehlt noch einfachhalthalber...
+
+//private methods
+static bool check_vertical(Game* game, int column);
 
 #endif // _VIER_H_

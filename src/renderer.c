@@ -45,6 +45,8 @@ void render_game(Renderer* renderer, Game* game) {
         } else {
             DrawCircle(RENDERER_CURRENT_PLAYER_POSITION_X, RENDERER_CURRENT_PLAYER_POSITION_Y, RENDERER_BALL_RADIUS, RENDERER_RED_STONE_COLOR);    
         }
+    } else if(game->game_over) {
+        //TODO render winning line
     }
 
     int x_position = RENDERER_BOARD_POSITION_X + RENDERER_BALL_RADIUS;
@@ -82,11 +84,8 @@ void render_input(InputRenderer* input_renderer) {
         char str[5];
         sprintf(str, "%d", i + 1);
         if (GuiButton((Rectangle){input_renderer->column_position_x , input_renderer->column_position_y, INPUT_RENDERER_WIDTH, INPUT_RENDERER_HEIGHT }, 
-        GuiIconText(ICON_ARROW_DOWN_FILL, str))) { 
+        GuiIconText(ICON_ARROW_DOWN_FILL, str))) input_renderer->column_pressed[i] = true; 
         
-            printf("BUTTON %d pressed\n", i + 1);
-            input_renderer->column_pressed[i] = true; 
-        }
 
         input_renderer->column_position_x += INPUT_RENDERER_WIDTH;
     }
