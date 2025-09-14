@@ -28,5 +28,6 @@ bool check_winner(Game* game, int column);
 //private methods
 static bool check_vertical(Game* game, int column);
 static bool check_horizontal(Game* game, int column);
+static bool check_diagonal(Game* game, int column);
 
 #endif // _VIER_H_

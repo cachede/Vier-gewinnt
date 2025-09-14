@@ -59,7 +59,7 @@ void print_gameboard_terminal(Game* game) {
 bool check_winner(Game* game, int column) {
 
     //TODO implement the check for a winner
-    return check_vertical(game, column) || check_horizontal(game, column); 
+    return check_vertical(game, column) || check_horizontal(game, column) || check_diagonal(game, column); 
 }
 
 bool check_vertical(Game* game, int column) {
@@ -88,32 +88,102 @@ bool check_horizontal(Game* game, int column) {
     int y_index = game->height_array[column] - 1;
 
     int win_counter = 1;
-    int search_index = column - 1;
+    int search_index_x = column - 1;
 
     // search left side
-    while(search_index >= 0 && game->board[y_index][search_index] == current_player && win_counter < 4) {
+    while(search_index_x >= 0 && game->board[y_index][search_index_x] == current_player && win_counter < 4) {
 
-        printf("CHECKINK: %d\n", search_index);
-        if(game->board[y_index][search_index] == current_player) {
+        printf("CHECKINK: %d\n", search_index_x);
+        if(game->board[y_index][search_index_x] == current_player) {
             win_counter++;
         }
 
-        search_index--;
+        search_index_x--;
     }
 
     // search right side
-    search_index = column + 1;
+    search_index_x = column + 1;
 
-    while(search_index < BOARD_WIDTH && game->board[y_index][search_index] == current_player && win_counter < 4) {
+    while(search_index_x < BOARD_WIDTH && game->board[y_index][search_index_x] == current_player && win_counter < 4) {
 
-        if(game->board[y_index][search_index] == current_player) {
+        if(game->board[y_index][search_index_x] == current_player) {
             win_counter++;
         }
 
-        search_index++;
+        search_index_x++;
     }
 
 
     return win_counter >= FOUR_TO_WIN;
 }
 
+// TODO: refactor
+bool check_diagonal(Game* game, int column) {
+
+    char current_player = game->stone_counter % 2 ? PLAYER_YELLOW : PLAYER_RED;
+    int win_counter = 1;
+
+    int search_index_y = game->height_array[column] - 1;
+    int search_index_x = column - 1;
+    search_index_y -= 1;
+
+    // bottom left side check
+    while((search_index_x >= 0 && search_index_y >= 0) && game->board[search_index_y][search_index_x] == current_player && win_counter < 4) {
+
+        if(game->board[search_index_y][search_index_x] == current_player) {
+            win_counter++;
+        }
+
+        search_index_y--;
+        search_index_x--;
+    }
+
+    search_index_y = game->height_array[column];
+    search_index_x = column + 1;
+    // top left side check
+    while((search_index_x < BOARD_WIDTH && search_index_y < BOARD_HEIGHT) && game->board[search_index_y][search_index_x] == current_player && win_counter < 4) {
+
+        if(game->board[search_index_y][search_index_x] == current_player) {
+            win_counter++;
+        }
+
+        search_index_x++;
+        search_index_y++;
+    }
+
+    if(win_counter == FOUR_TO_WIN) {
+        return true;
+    }
+
+    win_counter = 1;
+
+    // bottom right side check
+    search_index_y = game->height_array[column] - 1;
+    search_index_x = column + 1;
+    search_index_y -= 1;
+
+    while((search_index_y >= 0 && search_index_x >= 0) && game->board[search_index_y][search_index_x] == current_player && win_counter < 4) {
+
+        if(game->board[search_index_y][search_index_x] == current_player) {
+            win_counter++;
+        }
+
+        search_index_y--;
+        search_index_x++;
+    }
+
+    search_index_y = game->height_array[column];
+    search_index_x = column - 1;
+
+    while((search_index_y < BOARD_HEIGHT && search_index_y >= 0) && game->board[search_index_y][search_index_x] == current_player && win_counter < 4) {
+
+        if(game->board[search_index_y][search_index_x] == current_player) {
+            win_counter++;
+        }
+
+        search_index_y++;
+        search_index_x--;
+    }
+
+    return win_counter == FOUR_TO_WIN;
+}
