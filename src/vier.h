@@ -13,7 +13,7 @@
 
 typedef struct {
     char board[BOARD_HEIGHT][BOARD_WIDTH];
-    int height_array[BOARD_WIDTH];
+    int height_size_array[BOARD_WIDTH];
     int stone_counter;
     bool game_over;
 } Game;
@@ -25,9 +25,5 @@ void print_gameboard_terminal(Game* game);
 bool check_winner(Game* game, int column);
 //TODO eine get_current_player funktion fehlt noch einfachhalthalber...
 
-//private methods
-static bool check_vertical(Game* game, int column);
-static bool check_horizontal(Game* game, int column);
-static bool check_diagonal(Game* game, int column);
 
 #endif // _VIER_H_

@@ -50,7 +50,6 @@ typedef struct {
 } Renderer;
 
 typedef struct {
-    //TODO
     int column_position_x;
     int column_position_y;
 

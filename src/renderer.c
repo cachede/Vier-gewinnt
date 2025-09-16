@@ -50,9 +50,11 @@ void render_game(Renderer* renderer, Game* game) {
 
         char player_buf[20];
         char current_player = game->stone_counter % 2 == 0 ? 2 : 1; 
+        snprintf(player_buf, 20, "Player %d", current_player);
+        
         DrawText("Game over", 0, 0, 25, RED);
-        snprintf(player_buf, 20, "Player %d won", current_player);
-        DrawText(player_buf, 0, 25, 25, RED);
+        DrawText("Winner: ", 0, 25, 25, RED);
+        DrawText(player_buf, 0, 50, 25, current_player == 1 ? RENDERER_YELLOW_STONE_COLOR : RENDERER_RED_STONE_COLOR);
 
     }
 
